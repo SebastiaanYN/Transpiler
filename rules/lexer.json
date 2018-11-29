@@ -17,7 +17,8 @@
   },
   {
     "type": "space",
-    "match": " "
+    "match": " ",
+    "ignore": true
   },
   {
     "type": "parentheses_open",

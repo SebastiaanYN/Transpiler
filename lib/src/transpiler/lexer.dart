@@ -18,8 +18,10 @@ List<Token> lex(String source, List rules) {
         Match match = rule['regex'].firstMatch(line);
         if (match == null || match.start != 0) continue;
 
-        tokens.add(Token(
-            line.substring(match.start, match.end), rule['type'], row, col));
+        if (rule['ignore'] == null || !rule['ignore']) {
+          tokens.add(Token(
+              line.substring(match.start, match.end), rule['type'], row, col));
+        }
 
         line = line.substring(match.end);
         col += match.end;
