@@ -5,29 +5,32 @@ List<Token> lex(String source, List rules) {
   List<Token> tokens = List();
   List<String> lines = source.split('\n');
 
-  for (int i = 0; i < lines.length; i++) {
-    String line = lines[i];
+  rules.forEach((var rule) => rule['regex'] = RegExp(rule['match']));
 
+  for (int row = 0; row < lines.length; row++) {
+    String line = lines[row];
+
+    int col = 0;
     while (line.isNotEmpty) {
       bool invalid = true;
 
       for (var rule in rules) {
-        RegExp regex = RegExp(rule['match']);
-
-        Match match = regex.firstMatch(line);
+        Match match = rule['regex'].firstMatch(line);
         if (match == null || match.start != 0) continue;
 
-        tokens.add(Token(line.substring(match.start, match.end), rule['type'],
-            match.start, i));
+        tokens.add(Token(
+            line.substring(match.start, match.end), rule['type'], row, col));
+
         line = line.substring(match.end);
+        col += match.end;
 
         invalid = false;
         break;
       }
 
       if (invalid) {
-        int col = lines[i].indexOf(line);
-        throw InvalidTokenError('Invalid token "${line[0]}" at $i:$col');
+        int col = lines[row].indexOf(line);
+        throw InvalidTokenError('Invalid token "${line[0]}" at $row:$col');
       }
     }
   }
