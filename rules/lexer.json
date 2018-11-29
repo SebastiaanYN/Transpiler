@@ -1,0 +1,30 @@
+[
+  {
+    "type": "identifier",
+    "match": "[a-zA-Z]+"
+  },
+  {
+    "type": "number",
+    "match": "\\d+"
+  },
+  {
+    "type": "operator",
+    "match": "[+\\-*\\/^=]"
+  },
+  {
+    "type": "newline",
+    "match": "[\\r\\n]+"
+  },
+  {
+    "type": "space",
+    "match": " "
+  },
+  {
+    "type": "parentheses_open",
+    "match": "\\("
+  },
+  {
+    "type": "parentheses_close",
+    "match": "\\)"
+  }
+]
