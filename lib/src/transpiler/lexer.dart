@@ -1,7 +1,7 @@
 import '../errors/invalid_token.dart';
 import '../tokens/token.dart';
 
-List<Token> lexer(String source, List rules) {
+List<Token> lex(String source, List rules) {
   List<Token> tokens = List();
   List<String> lines = source.split('\n');
 
