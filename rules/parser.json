@@ -1,4 +1,12 @@
 [
   {
+    "type": "declaration",
+    "match": "identifier operator(=) number",
+    "output": "var $1 = $3;"
+  },
+  {
+    "type": "logarithm",
+    "match": "identifier(log(\\d+)) parentheses_open number parentheses_close",
+    "output": "(Math.log($3) / Math.log($1.1))"
   }
 ]

@@ -1,2 +1,2 @@
 number = 8
-(log10(100) + 2^3) / 5 + number
+log10(100)
