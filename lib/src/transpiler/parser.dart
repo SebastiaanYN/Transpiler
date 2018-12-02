@@ -10,8 +10,23 @@ List<Token> parse(List<Token> tokens, List rules) {
       int index = type.indexOf('(');
       return type.substring(0, index < 0 ? type.length : index);
     }).toList();
-
     rule['types'] = types;
+
+    List<RegExp> checks =
+        (rule['match'] as String).split(' ').map((String type) {
+      int index = type.indexOf('(');
+      if (index < 0) {
+        return null;
+      }
+
+      return type.substring(index + 1, type.lastIndexOf(')'));
+    }).map((String regex) {
+      if (regex != null) {
+        return RegExp(regex);
+      }
+    }).toList();
+
+    rule['checks'] = checks;
   });
 
   for (int t = 0; t < tokens.length; t++) {
@@ -23,7 +38,9 @@ List<Token> parse(List<Token> tokens, List rules) {
 
       // Check the types of the rule
       for (int i = 0; i < rule['types'].length; i++) {
-        if (tokens[t + i].type == rule['types'][i]) {
+        if (tokens[t + i].type == rule['types'][i] &&
+            (rule['checks'][i] == null ||
+                (rule['checks'][i] as RegExp).hasMatch(tokens[t + i].lexeme))) {
           valid = true;
         } else {
           valid = false;

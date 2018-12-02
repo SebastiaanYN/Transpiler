@@ -8,5 +8,20 @@
     "type": "logarithm",
     "match": "identifier(log(\\d+)) parentheses_open number parentheses_close",
     "output": "(Math.log($3) / Math.log($1.1))"
+  },
+  {
+    "type": "logarithm",
+    "match": "identifier(log) parentheses_open number parentheses_close",
+    "output": "Math.log($3)"
+  },
+  {
+    "type": "pow",
+    "match": "number operator(\\^) number",
+    "output": "Math.pow($1, $3)"
+  },
+  {
+    "type": "operation",
+    "match": "number operator([+\\-*\\/]) number",
+    "output": "$1 $2 $3"
   }
 ]
